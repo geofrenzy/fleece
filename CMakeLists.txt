@@ -25,11 +25,15 @@ if (APPLE AND NOT ANDROID)
 elseif(WIN32)
     include_directories("MSVC")
     set(FLEECE_SRC ${FLEECE_SRC} MSVC/memmem.cc)
+elseif(ANDROID)
+    include_directories(Fleece/Mutable)
+    aux_source_directory(Fleece/Mutable  MUTABLE_SRC)
+    set(FLEECE_SRC ${FLEECE_SRC} ${MUTABLE_SRC})
 endif()
 
-include_directories("Fleece" 
-                    "vendor/libb64" 
-                    "vendor/jsonsl" )
+include_directories("Fleece"
+                    "vendor/libb64"
+                    "vendor/jsonsl")
 
 if(!MSVC)
 	set_source_files_properties(Fleece/Fleece_C_impl.cc  PROPERTIES)
